@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IW5r</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #111;
+            font-family: 'Arial', sans-serif;
+            color: #4da6ff;
+            text-align: center;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .launcher-content {
+            text-align: center;
+            max-width: 1082px;
+            max-height: 100vh;
+            overflow: hidden;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .game-title {
+            font-size: 48px;
+            margin: 0;
+            line-height: 1.2;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .title-white {
+            color: #ffffff;
+        }
+
+        .title-blue {
+            color: #4da6ff;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .launch-button {
+            position: relative;
+            width: 310px;
+            height: 161px;
+            font-size: 0;
+            background-color: transparent;
+            border: none;
+            border-radius: 11px;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.2s;
+            overflow: hidden;
+            padding: 23px;
+            margin: 0 15px;
+        }
+
+        .launch-button.disabled::after {
+            background-color: rgba(128, 128, 128, 0.7);
+        }
+
+        .launch-button::after {
+            content: attr(data-title);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(77, 166, 255, 0.7);
+            color: #ffffff;
+            font-size: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            padding: 23px;
+            line-height: 1.2;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .launch-button:hover::after {
+            opacity: 1;
+        }
+
+        .launch-button:hover {
+            transform: scale(1.05);
+        }
+
+        .launch-button:nth-child(1) {
+            background-image: url('https://github.com/Croella/iw5r-launcher/blob/main/assets/multiplayer.jpg?raw=true');
+        }
+
+        .launch-button:nth-child(2) {
+            background-image: url('https://github.com/Croella/iw5r-launcher/blob/main/assets/survival.jpg?raw=true');
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .version-info {
+            font-size: 11px;
+            color: #4da6ff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .separator {
+            font-size: 11px;
+            color: #4da6ff;
+            padding: 0 15px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .about-button {
+            font-size: 11px;
+            color: #4da6ff;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .about-button:hover {
+            color: #66b2ff;
+        }
+
+        .about-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            background-color: #111;
+            border-radius: 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-title {
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .about-text {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #cccccc;
+            text-align: center;
+            margin-bottom: 10px;
+            max-width: 600px;
+        }
+
+        .about-back-button {
+            font-size: 16px;
+            color: #4da6ff;
+            background-color: transparent;
+            border: 2px solid #4da6ff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .about-back-button:hover {
+            background-color: #4da6ff;
+            color: #111;
+        }
+    </style>
+</head>
+<body>
+    <div id="launcher" class="launcher-content">
+        <h1 class="game-title">
+            <span class="title-white">IW5</span><span class="title-blue">r</span>
+        </h1>
+        <div class="buttons-container">
+            <button class="launch-button" onclick="startGame('multiplayer')" data-title="Multiplayer"></button>
+            <button class="launch-button disabled" onclick="" data-title="Coming Soon..." disabled></button>
+        </div>
+        <div class="footer">
+            <span class="version-info">Version 1.0</span>
+            <span class="separator">&#8226;</span>
+            <button class="about-button" onclick="showAbout()">About Us</button>
+        </div>
+    </div>
+
+    <div id="about" class="hidden">
+        <div class="about-container">
+            <h1 class="about-title">
+                <span class="title-white">About </span><span class="title-blue">Us</span>
+            </h1>
+            <p class="about-text">
+                Welcome to IW5r! We wanted to bring life back to the game we love in a whole new way, from new UI, HUD, Gamemodes and more..
+
+                Credits to the H1-Mod and Zonetool development teams. Without them and their support, this project would not have been possible.
+            </p>
+            <button class="about-back-button" onclick="hideAbout()">Back to Launcher</button>
+        </div>
+    </div>
+
+    <script>
+        function startGame(mode) {
+            if (mode === 'multiplayer') {
+                window.external.selectMode(2);
+            } else if (mode === 'survival') {
+                window.external.selectMode(1);
+            }
+        }
+
+        function showAbout() {
+            document.getElementById('about').classList.remove('hidden');
+        }
+
+        function hideAbout() {
+            document.getElementById('about').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
